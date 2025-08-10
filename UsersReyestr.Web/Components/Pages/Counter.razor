@@ -1,0 +1,29 @@
+﻿@page "/counter"
+@using UsersReyestr.Web.Brokers
+@using UsersReyestr.Web.Models.Students
+@inject IApiBroker ApiBroker
+
+<h3>Students</h3>
+
+@if (students is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var student in students)
+        {
+            <li>@student.FirstName @student.LastName — @student.Gpa</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Student> students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await ApiBroker.GetAllArksAsync();
+    }
+}
